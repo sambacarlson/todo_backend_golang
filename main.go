@@ -13,7 +13,7 @@ import (
 
 func main() {
 	err := godotenv.Load()
-	Const := struct {
+	CONF := struct {
 		BASE_URL string
 		DB_URL   string
 	}{
@@ -21,14 +21,16 @@ func main() {
 		DB_URL:   os.Getenv("DB_URI"),
 	}
 	if err != nil {
-		log.Fatal("Error loading env file")
+		log.Fatal("error loading env file")
 		return
 	}
-	db, err := sql.Open("postgres", Const.DB_URL)
+	db, err := sql.Open("postgres", CONF.DB_URL)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
+	fmt.Printf("db here;; %v", db)
 
-	_ = presentation.Route(Const.BASE_URL)
+	// register routes
+	_ = presentation.Route(CONF.BASE_URL)
 }
