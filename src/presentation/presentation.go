@@ -1,13 +1,15 @@
 package presentation
 
 import (
+	"log"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	lg "github.com/sambacarlson/todo_backend_golang/src/logic"
 )
 
-func Route(BASE_URL string) error {
+func Route(BASE_URL string, lgc lg.LogicImpl) error {
 	router := gin.Default()
 
 	router.GET("/", func(ctx *gin.Context) {
@@ -23,7 +25,13 @@ func Route(BASE_URL string) error {
 		ctx.JSON(http.StatusOK, "")
 	})
 	router.GET("/users", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, "")
+		users, err := lgc.GetAllUsers(ctx)
+		if err != nil {
+			log.Printf("---> error is not nil: %v", err)
+			ctx.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
+		ctx.JSON(http.StatusOK, users)
 	})
 	router.PATCH("/users/:id", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, "")

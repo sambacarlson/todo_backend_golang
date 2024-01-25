@@ -8,6 +8,8 @@ import (
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/sambacarlson/todo_backend_golang/src/logic"
+	"github.com/sambacarlson/todo_backend_golang/src/persistence"
 	"github.com/sambacarlson/todo_backend_golang/src/presentation"
 )
 
@@ -29,8 +31,11 @@ func main() {
 		panic(err)
 	}
 	defer db.Close()
-	fmt.Printf("db here;; %v", db)
+
+	//New database instance
+	pers, _ := persistence.NewConnection(db)
+	logics, _ := logic.NewLogic(pers)
 
 	// register routes
-	_ = presentation.Route(CONF.BASE_URL)
+	_ = presentation.Route(CONF.BASE_URL, *logics)
 }
