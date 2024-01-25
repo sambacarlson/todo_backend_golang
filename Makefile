@@ -33,7 +33,7 @@ create-migration:
 
 run-db:
 	docker container prune -f
-	docker run --name $(DB_CONTAINER_NAME) -e POSTGRES_PASSWORD=$(DB_PASSWORD) -p $(DB_PORT):$(DB_PORT) -v $(DB_VOLUME_PATH):/mytodo_data -d $(DB_IMAGE_NAME);
+	docker run --name $(DB_CONTAINER_NAME) -e POSTGRES_PASSWORD=$(DB_PASSWORD) -p $(DB_PORT):$(DB_PORT) -v $(DB_VOLUME_PATH):/mytodo_data -it $(DB_IMAGE_NAME)
 
 start-db:
 	docker start $(DB_CONTAINER_NAME)

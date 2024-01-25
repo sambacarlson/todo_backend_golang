@@ -10,7 +10,7 @@ import (
 
 type Logic interface {
 	CreateUser(ctx context.Context, user models.User) (*models.User, error)
-	GetAllUsers(ctx context.Context) ([]*models.User, error)
+	GetAllUsers(ctx context.Context) ([]models.User, error)
 	UpdateUser(ctx context.Context, userID uuid.UUID, user models.User) (*models.User, error)
 	DeleteUser(ctx context.Context, userID uuid.UUID) error
 	GetUserByID(ctx context.Context, userID uuid.UUID, user models.User) (*models.User, error)
@@ -51,7 +51,7 @@ func NewLogic(repo persistence.DataAccess) (*LogicImpl, error) {
 func (l *LogicImpl) CreateUser(ctx context.Context, user models.User) (*models.User, error) {
 	panic("unimplemented")
 }
-func (l *LogicImpl) GetAllUsers(ctx context.Context) ([]*models.User, error) {
+func (l *LogicImpl) GetAllUsers(ctx context.Context) ([]models.User, error) {
 	users, err := l.repo.GetAllUsers(ctx)
 	if err != nil {
 		return nil, err

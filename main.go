@@ -26,7 +26,7 @@ func main() {
 		log.Fatal("error loading env file")
 		return
 	}
-	db, err := sql.Open("postgres", CONF.DB_URL)
+	db, err := sql.Open("postgres", "user=todosuperuser password=mhXYtq3xBvw5Cmw dbname=mytodo_db sslmode=disable")
 	if err != nil {
 		panic(err)
 	}

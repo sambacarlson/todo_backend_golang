@@ -11,7 +11,7 @@ import (
 
 type DataAccess interface {
 	CreateUser(ctx context.Context, user models.User) (*models.User, error)
-	GetAllUsers(ctx context.Context) ([]*models.User, error)
+	GetAllUsers(ctx context.Context) ([]models.User, error)
 	UpdateUser(ctx context.Context, userID uuid.UUID, user models.User) (*models.User, error)
 	DeleteUser(ctx context.Context, userID uuid.UUID) error
 	GetUserByID(ctx context.Context, userID uuid.UUID, user models.User) (*models.User, error)
@@ -52,9 +52,9 @@ func (d *DBCon) CreateUser(ctx context.Context, user models.User) (*models.User,
 	panic("unimplemented")
 }
 
-func (d *DBCon) GetAllUsers(ctx context.Context) ([]*models.User, error) {
-	users := []*models.User{}
-	err := sqlx.GetContext(ctx, d.db, users, "SELECT * FROM public.users")
+func (d *DBCon) GetAllUsers(ctx context.Context) ([]models.User, error) {
+	var users []models.User
+	err := sqlx.SelectContext(ctx, d.db, &users, "SELECT * FROM public.users")
 	if err != nil {
 		return nil, err
 	}
