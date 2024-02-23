@@ -1,5 +1,9 @@
 package presentation
 
-func TestStatusCheck() {
+import "testing"
 
+func TestStatusCheck(t *testing.T) {
+}
+
+func TestCreateUser(t *testing.T) {
 }
